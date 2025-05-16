@@ -65,6 +65,11 @@
         padding: 10px;
       }
     }
+      .task-card.overdue {
+  border: 2px solid red;
+  background-color: #ffe5e5;
+}
+
   </style>
 </head>
 <body>
@@ -98,6 +103,11 @@
     let completedStatus = JSON.parse(localStorage.getItem("completedStatus")) || new Array(tasks.length).fill(false);
     const container = document.getElementById("task-container");
     const dateFilter = document.getElementById("date-filter");
+      const today = new Date().toISOString().split('T')[0];
+if (task.deadline < today) {
+  card.classList.add("overdue");
+}
+
 
     function renderTasks(filteredTasks) {
       container.innerHTML = "";
