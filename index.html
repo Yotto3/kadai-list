@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>大学の課題一覧</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      background-color: #f0f0f8;
+    }
+    .task-card {
+      background-color: #ffffff;
+      border: 1px solid #ccc;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 10px;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    }
+    .task-card.completed {
+      opacity: 0.6;
+      text-decoration: line-through;
+    }
+    .task-card h2 {
+      margin: 0;
+      color: #333366;
+    }
+    .task-card p {
+      margin: 5px 0;
+    }
+    .filter-section, .links {
+      margin-bottom: 20px;
+    }
+    input[type="date"], input[type="text"] {
+      padding: 4px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    textarea {
+      width: 100%;
+      height: 60px;
+      resize: vertical;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 4px;
+    }
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>📘 大学の課題一覧</h1>
+
+  <div class="links">
+    <a href="https://teams.microsoft.com/" target="_blank">🔗 Teams</a> |
+    <a href="https://unipa.example.com" target="_blank">📡 ユニパ</a>
+  </div>
+
+  <div class="filter-section">
+    <label>📅 締切日で絞り込み: 
+      <input type="date" id="date-filter">
+    </label>
+    <button onclick="resetFilter()">リセット</button>
+  </div>
+
+  <div id="task-container"></div>
+
+  <script>
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [
+      { subject: "情報科学概論", deadline: "2025-06-01", method: "Teams", note: "PDFで提出。ファイル名は「学籍番号_名前」", icon: "💻" },
+      { subject: "代数", deadline: "2025-06-05", method: "ユニパ", note: "Javaファイル＋レポート", icon: "📓" },
+      { subject: "プログラミング", deadline: "2025-05-20", method: "Teams", note: "A4 1枚、PDF形式", icon: "💻" },
+      { subject: "アルゴリズム", deadline: "2025-05-20", method: "ユニパ", note: "A4 1枚、PDF形式", icon: "💻" },
+      { subject: "情報理論", deadline: "2025-05-20", method: "ユニパ", note: "A4 1枚、PDF形式", icon: "💻" },
+      { subject: "確率・統計", deadline: "2025-05-20", method: "Teams", note: "A4 1枚、PDF形式", icon: "💻" }
+    ];
+
+    let completedStatus = JSON.parse(localStorage.getItem("completedStatus")) || new Array(tasks.length).fill(false);
+    const container = document.getElementById("task-container");
+    const dateFilter = document.getElementById("date-filter");
+
+    function renderTasks(filteredTasks) {
+      container.innerHTML = "";
+      filteredTasks.forEach((task, index) => {
+        const globalIndex = tasks.indexOf(task);
+        const card = document.createElement("div");
+        card.className = "task-card";
+        if (completedStatus[globalIndex]) card.classList.add("completed");
+
+        card.innerHTML = `
+          <h2>${task.icon} ${task.subject}</h2>
+          <p>✅ 完了: <input type="checkbox" ${completedStatus[globalIndex] ? "checked" : ""} onchange="toggleComplete(${globalIndex})"></p>
+          <p>📅 締切: <input type="date" value="${task.deadline}" onchange="updateDeadline(${globalIndex}, this.value)"></p>
+          <p>📝 提出方法: ${task.method}</p>
+          <p>備考: <textarea onchange="updateNote(${globalIndex}, this.value)">${task.note}</textarea></p>
+        `;
+        container.appendChild(card);
+      });
+
+      if (filteredTasks.length === 0) {
+        container.innerHTML = "<p>該当する課題はありません。</p>";
+      }
+
+      saveToStorage();
+    }
+
+    function updateDeadline(index, newDate) {
+      tasks[index].deadline = newDate;
+      filterTasks();
+    }
+
+    function updateNote(index, newNote) {
+      tasks[index].note = newNote;
+      saveToStorage();
+    }
+
+    function toggleComplete(index) {
+      completedStatus[index] = !completedStatus[index];
+      filterTasks();
+    }
+
+    function resetFilter() {
+      dateFilter.value = "";
+      renderTasks(tasks);
+    }
+
+    function filterTasks() {
+      if (dateFilter.value) {
+        const filtered = tasks.filter(task => task.deadline === dateFilter.value);
+        renderTasks(filtered);
+      } else {
+        renderTasks(tasks);
+      }
+    }
+
+    dateFilter.addEventListener("input", filterTasks);
+
+    function saveToStorage() {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+      localStorage.setItem("completedStatus", JSON.stringify(completedStatus));
+    }
+
+    // 初期表示
+    renderTasks(tasks);
+  </script>
+
+</body>
+</html>
