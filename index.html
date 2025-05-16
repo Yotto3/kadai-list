@@ -65,6 +65,15 @@
         padding: 10px;
       }
     }
+.task-card.warning {
+  background-color: #fff3cd; /* 黄色背景 */
+  border-left: 5px solid orange;
+}
+
+.task-card.overdue {
+  background-color: #f8d7da; /* 赤背景 */
+  border-left: 5px solid red;
+}
 
 
   </style>
@@ -126,7 +135,38 @@
       }
 
       saveToStorage();
+    checkUpcomingDeadlines(); // 🔔 締切通知をここで実行
     }
+    function checkUpcomingDeadlines() {
+  const today = new Date();
+  const tomorrow = new Date();
+  tomorrow.setDate(today.getDate() + 1);
+
+  const upcomingTasks = tasks.filter((task, i) => {
+    const deadline = new Date(task.deadline);
+    return (
+      !completedStatus[i] &&
+      (isSameDate(deadline, today) || isSameDate(deadline, tomorrow))
+    );
+  });
+
+  if (upcomingTasks.length > 0) {
+    let message = "🔔 締切が近い課題があります：\n\n";
+    upcomingTasks.forEach(task => {
+      message += `📌 ${task.icon} ${task.subject} - 締切: ${task.deadline}\n`;
+    });
+    alert(message);
+  }
+}
+
+function isSameDate(d1, d2) {
+  return (
+    d1.getFullYear() === d2.getFullYear() &&
+    d1.getMonth() === d2.getMonth() &&
+    d1.getDate() === d2.getDate()
+  );
+}
+
 
     function updateDeadline(index, newDate) {
       tasks[index].deadline = newDate;
