@@ -229,6 +229,7 @@ function isSameDate(d1, d2) {
       events: tasks.map((task, index) => ({
         title: `${task.icon} ${task.subject}`,
         date: task.deadline,
+        borderColor: "black",
         color: completedStatus[index] ? "lightgray" : "#3788d8",
       })),
     });
