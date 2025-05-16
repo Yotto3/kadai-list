@@ -87,12 +87,12 @@
 
   <script>
     let tasks = JSON.parse(localStorage.getItem("tasks")) || [
-      { subject: "情報科学概論", deadline: "2025-06-01", method: "Teams", note: "PDFで提出。ファイル名は「学籍番号_名前」", icon: "💻" },
-      { subject: "代数", deadline: "2025-06-05", method: "ユニパ", note: "Javaファイル＋レポート", icon: "📓" },
-      { subject: "プログラミング", deadline: "2025-05-20", method: "Teams", note: "A4 1枚、PDF形式", icon: "💻" },
-      { subject: "アルゴリズム", deadline: "2025-05-20", method: "ユニパ", note: "A4 1枚、PDF形式", icon: "💻" },
-      { subject: "情報理論", deadline: "2025-05-20", method: "ユニパ", note: "A4 1枚、PDF形式", icon: "💻" },
-      { subject: "確率・統計", deadline: "2025-05-20", method: "Teams", note: "A4 1枚、PDF形式", icon: "💻" }
+      { subject: "情報科学概論", deadline: "2025-06-01", method: "Teams", note: " ", icon: "💻" },
+      { subject: "代数", deadline: "2025-06-05", method: "ユニパ", note: " ", icon: "📓" },
+      { subject: "プログラミング", deadline: "2025-05-20", method: "Teams", note: " ", icon: "💻" },
+      { subject: "アルゴリズム", deadline: "2025-05-20", method: "ユニパ", note: " ", icon: "💻" },
+      { subject: "情報理論", deadline: "2025-05-20", method: "ユニパ", note: " ", icon: "💻" },
+      { subject: "確率・統計", deadline: "2025-05-20", method: "Teams", note: " ", icon: "💻" }
     ];
 
     let completedStatus = JSON.parse(localStorage.getItem("completedStatus")) || new Array(tasks.length).fill(false);
