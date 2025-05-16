@@ -1,6 +1,22 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <meta charset="UTF-8">
+  <title>パスワード保護サイト</title>
+  <script>
+    // ✅ ここで好きなパスワードを設定
+    const correctPassword = "qwerty";
+
+    // パスワード入力
+    const userPassword = prompt("このページはパスワードで保護されています。\nパスワードを入力してください：");
+
+    // チェック
+    if (userPassword !== correctPassword) {
+      alert("パスワードが間違っています。アクセスできません。");
+      // 他ページに飛ばすか、閉じる
+      window.location.href = "https://google.com"; // 別のページに飛ばす
+    }
+  </script>
   <meta charset="UTF-8">
   <title>大学の課題一覧</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
