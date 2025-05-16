@@ -230,7 +230,8 @@ function isSameDate(d1, d2) {
         title: `${task.icon} ${task.subject}`,
         date: task.deadline,
         borderColor: "black",
-        color: completedStatus[index] ? "lightgray" : "#3788d8",
+        backgroundColor: completedStatus[index] ? "lightgray" : "#3788d8",
+        textColor: completedStatus[index] ? "gray" : "white"
       })),
     });
 
