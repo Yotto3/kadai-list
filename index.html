@@ -81,16 +81,33 @@
   border-left: 5px solid red;
 }
 
-/* 曜日ヘッダーの上下に枠線を表示 */
+/* 曜日ヘッダー行（上部の曜日名部分） */
 .fc .fc-scrollgrid thead tr th {
-  border-bottom: 1px solid black !important;
-  border-top: 1px solid black !important;
+  border: 1px solid black !important;
 }
 
-/* 月間カレンダーの各日枠 */
+/* 月間表示の日付セル */
+.fc .fc-daygrid-day-frame {
+  border: 1px solid black !important;
+}
+
+/* セル全体に線が引かれない場合の補強 */
 .fc .fc-daygrid-day {
   border: 1px solid black !important;
 }
+
+/* 全体グリッドの内側の枠（縦横） */
+.fc .fc-scrollgrid-section,
+.fc .fc-scrollgrid-sync-table,
+.fc .fc-scrollgrid,
+.fc .fc-daygrid-body,
+.fc .fc-daygrid-body table,
+.fc .fc-daygrid-body tbody,
+.fc .fc-daygrid-body td {
+  border: 1px solid black !important;
+  border-collapse: collapse !important;
+}
+
 
 
 
